@@ -5,26 +5,42 @@ void Snake::move(WINDOW* window)
     int width, height;
     getmaxyx(window, height, width);
 
-    ++tail.x;
-    if (tail.x >= width) {
-        tail.x = 0;
+    switch (direction) {
+    case Right:
+        ++head.x;
+        break;
+
+    default:
+        break;
     }
 }
 
 void Snake::draw(WINDOW* window)
 {
-    wmove(window, tail.y, tail.x);
 
     int width, height;
     getmaxyx(window, height, width);
 
     for (int i = 0; i < length; ++i) {
+        switch (direction) {
+        case Right: {
+            int x = head.x - i;
+            int y = head.y;
 
-        int cursorX, cursorY;
-        getyx(window, cursorY, cursorX);
+            if (x >= width) {
+                x %= width;
+            }
 
-        if (cursorX <= width) {
+            wmove(window, y, x);
             waddch(window, '0');
+            break;
+        }
+        default:
+            break;
         }
     }
+}
+
+void Snake::changeDirectionAtPoint(Direction direction, const Point& point)
+{
 }

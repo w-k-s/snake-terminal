@@ -5,17 +5,26 @@
 #include "Point.h"
 
 class Snake {
+	enum Direction{
+		Up,
+		Down,
+		Left,
+		Right
+	};
 private:
     int length;
-    Point tail;
+    Point head;
+    Direction direction;
 
 public:
-    Snake(int length, Point tail)
+    Snake(int length, Point head, Direction direction = Direction::Right)
         : length{ length }
-        , tail{ tail }
+        , head{ head }
+        , direction{ direction }
     {
     }
 
+    void changeDirectionAtPoint(Direction direction, const Point& point);
     void move(WINDOW * window);
     void draw(WINDOW * window);
 };

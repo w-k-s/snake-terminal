@@ -7,14 +7,14 @@ int main()
 {
     initscr();
     cbreak(); // disable character buffering
-    noecho(); // don't print input characters
-    keypad(stdscr, TRUE); // let getch() to detecte special keys e.g. up,down
+    noecho(); // don't print input keys
+    keypad(stdscr, TRUE); // let getch() return special keys e.g. up,down
     nodelay(stdscr, TRUE);
 
     int inputKey;
     bool userDidQuitGame;
-    Snake snake{ 4, Point{ 0, 0 } };
-
+    Snake snake{ 4, Point{ 3, 0 } };
+    move(0, 0);
     while (!userDidQuitGame) {
         inputKey = getch();
 
