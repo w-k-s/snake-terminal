@@ -25,6 +25,8 @@ void Snake::move(WINDOW* window)
 
         if (it != _turns.end()) {
             direction = it->direction;
+
+            //Remove turning point when last segment of snake has passed through it
             if (i == 0) {
                 _turns.erase(it);
             }
@@ -46,6 +48,14 @@ void Snake::move(WINDOW* window)
             continue;
         default:
             continue;
+        }
+
+        it = std::find_if(_points.begin(), _points.end(), [=](const Point& p) {
+            return point.hasEqualCoordinates(p);
+        });
+
+        if(it != _points.end()){
+            _dead = true;
         }
     }
 }
@@ -74,4 +84,9 @@ Point Snake::head() const
 int Snake::length() const
 {
     return _points.size();
+}
+
+bool Snake::dead() const
+{
+    return _dead;
 }

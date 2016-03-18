@@ -14,6 +14,7 @@ public:
 private:
     PointVector _points;
     PointVector _turns;
+    bool _dead;
 
 public:
     Snake(int length, const Point& tail)
@@ -43,6 +44,7 @@ public:
     void draw(WINDOW * window) const;
     Point head() const;
     int length() const;
+    bool dead() const;
 
     friend std::ostream& operator<<(std::ostream& os,const Snake& snake){
          os<<"Points:"<<std::endl;
