@@ -12,16 +12,14 @@ class Snake {
 public:
     
 private:
-    int _length;
     PointVector _points;
     PointVector _turns;
 
 public:
     Snake(int length, const Point& tail)
-        :_length{length}
     {
         _points.push_back(tail);
-        for(int i=0;i<_length - 1; i++){
+        for(int i=0;i<length - 1; i++){
             Point& lastPoint = _points[i];
             switch(tail.direction){
                 case Point::Direction::Right:

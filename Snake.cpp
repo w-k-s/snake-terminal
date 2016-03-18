@@ -9,17 +9,25 @@ void Snake::move(WINDOW* window)
     getmaxyx(window, height, width);
     Point bottomRight{ height, width };
 
+    int len = length();
     Point::Direction direction;
-    for (int i = 0; i < length(); i++) {
+
+    for (int i = 0; i < len; i++) {
         Point& point = _points[i];
 
         if (i == 0) {
             direction = point.direction;
         }
 
-        auto it = std::find_if(_turns.begin(), _turns.end(), [=](const Point& p) { return point.hasEqualCoordinates(p); });
+        auto it = std::find_if(_turns.begin(), _turns.end(), [=](const Point& p) {
+            return point.hasEqualCoordinates(p);
+        });
+
         if (it != _turns.end()) {
             direction = it->direction;
+            if (i == 0) {
+                _turns.erase(it);
+            }
         }
 
         point.direction = direction;
