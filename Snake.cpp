@@ -1,46 +1,69 @@
+#include <cassert>
+#include <algorithm>
 #include "Snake.h"
+#include "Point.h"
 
 void Snake::move(WINDOW* window)
 {
     int width, height;
     getmaxyx(window, height, width);
+    Point bottomRight{ height, width };
 
-    switch (direction) {
-    case Right:
-        ++head.x;
-        break;
+    Point::Direction direction;
+    for (int i = 0; i < length(); i++) {
+        Point& point = _points[i];
 
-    default:
-        break;
-    }
-}
+        if (i == 0) {
+            direction = point.direction;
+        }
 
-void Snake::draw(WINDOW* window)
-{
+        auto it = std::find_if(_turns.begin(), _turns.end(), [=](const Point& p) { return point.hasEqualCoordinates(p); });
+        if (it != _turns.end()) {
+            direction = it->direction;
+        }
 
-    int width, height;
-    getmaxyx(window, height, width);
-
-    for (int i = 0; i < length; ++i) {
+        point.direction = direction;
         switch (direction) {
-        case Right: {
-            int x = head.x - i;
-            int y = head.y;
-
-            if (x >= width) {
-                x %= width;
-            }
-
-            wmove(window, y, x);
-            waddch(window, '0');
-            break;
-        }
+        case Point::Direction::Right:
+            point.addKeepingWithinRange(0, 1, bottomRight);
+            continue;
+        case Point::Direction::Left:
+            point.addKeepingWithinRange(0, -1, bottomRight);
+            continue;
+        case Point::Direction::Up:
+            point.addKeepingWithinRange(-1, 0, bottomRight);
+            continue;
+        case Point::Direction::Down:
+            point.addKeepingWithinRange(1, 0, bottomRight);
+            continue;
         default:
-            break;
+            continue;
         }
     }
 }
 
-void Snake::changeDirectionAtPoint(Direction direction, const Point& point)
+void Snake::draw(WINDOW* window) const
 {
+    for (int i = 0; i < length(); i++) {
+        const Point& point = _points[i];
+        wmove(window, point.y, point.x);
+        waddch(window, '0');
+    }
+}
+
+void Snake::changeSnakeHeadDirection(Point::Direction direction)
+{
+    Point headCopy = head();
+    headCopy.direction = direction;
+    _turns.push_back(headCopy);
+}
+
+Point Snake::head() const
+{
+    return _points[length() - 1];
+}
+
+int Snake::length() const
+{
+    return _points.size();
 }

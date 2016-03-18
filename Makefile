@@ -5,7 +5,7 @@ OUTPUT=SnakeCLI
 INCLUDES=
 LIBRARIES=-lcurses
 CC=clang++
-CCFLAGS=-stdlib=libc++ -std=c++11
+CCFLAGS=-stdlib=libc++ -std=c++11 -Wunused -Wall
 
 #------------------------------------------------------------------------------
 
