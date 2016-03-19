@@ -6,6 +6,8 @@
 #include <vector>
 #include "Point.h"
 
+#define TAIL_INDEX 0
+
 typedef std::vector<Point> PointVector;
 
 class Snake {
@@ -17,10 +19,10 @@ private:
     bool _dead;
 
 public:
-    Snake(int length, const Point& tail)
+    Snake(UChar length, const Point& tail)
     {
         _points.push_back(tail);
-        for(int i=0;i<length - 1; i++){
+        for(int i= TAIL_INDEX ;i<length - 1; i++){
             Point& lastPoint = _points[i];
             switch(tail.direction){
                 case Point::Direction::Right:

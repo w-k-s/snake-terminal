@@ -12,10 +12,10 @@ void Snake::move(WINDOW* window)
     int len = length();
     Point::Direction direction;
 
-    for (int i = 0; i < len; i++) {
+    for (int i = TAIL_INDEX; i < len; i++) {
         Point& point = _points[i];
 
-        if (i == 0) {
+        if (i == TAIL_INDEX) {
             direction = point.direction;
         }
 
@@ -27,7 +27,7 @@ void Snake::move(WINDOW* window)
             direction = it->direction;
 
             //Remove turning point when last segment of snake has passed through it
-            if (i == 0) {
+            if (i == TAIL_INDEX) {
                 _turns.erase(it);
             }
         }
@@ -50,11 +50,12 @@ void Snake::move(WINDOW* window)
             continue;
         }
 
+        //TODO, just check if it exists - don't need an iterator.
         it = std::find_if(_points.begin(), _points.end(), [=](const Point& p) {
             return point.hasEqualCoordinates(p);
         });
 
-        if(it != _points.end()){
+        if (it != _points.end()) {
             _dead = true;
         }
     }
@@ -62,7 +63,7 @@ void Snake::move(WINDOW* window)
 
 void Snake::draw(WINDOW* window) const
 {
-    for (int i = 0; i < length(); i++) {
+    for (int i = TAIL_INDEX; i < length(); i++) {
         const Point& point = _points[i];
         wmove(window, point.y, point.x);
         waddch(window, '0');
