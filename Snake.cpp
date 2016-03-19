@@ -5,6 +5,10 @@
 
 void Snake::move(WINDOW* window)
 {
+    if (dead()) {
+        return;
+    }
+
     int width, height;
     getmaxyx(window, height, width);
     Point bottomRight{ height, width };
@@ -36,26 +40,26 @@ void Snake::move(WINDOW* window)
         switch (direction) {
         case Point::Direction::Right:
             point.addKeepingWithinRange(0, 1, bottomRight);
-            continue;
+            break;
         case Point::Direction::Left:
             point.addKeepingWithinRange(0, -1, bottomRight);
-            continue;
+            break;
         case Point::Direction::Up:
             point.addKeepingWithinRange(-1, 0, bottomRight);
-            continue;
+            break;
         case Point::Direction::Down:
             point.addKeepingWithinRange(1, 0, bottomRight);
-            continue;
+            break;
         default:
-            continue;
+            break;
         }
 
         //TODO, just check if it exists - don't need an iterator.
-        it = std::find_if(_points.begin(), _points.end(), [=](const Point& p) {
+        int count = std::count_if(_points.begin(), _points.end(), [=](const Point& p) {
             return point.hasEqualCoordinates(p);
         });
 
-        if (it != _points.end()) {
+        if (count > 2) {
             _dead = true;
         }
     }
@@ -73,8 +77,11 @@ void Snake::draw(WINDOW* window) const
 void Snake::changeSnakeHeadDirection(Point::Direction direction)
 {
     Point headCopy = head();
-    headCopy.direction = direction;
-    _turns.push_back(headCopy);
+
+    if (Point::reverseDirectionOf(direction) != headCopy.direction) {
+        headCopy.direction = direction;
+        _turns.push_back(headCopy);
+    }
 }
 
 Point Snake::head() const

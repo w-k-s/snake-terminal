@@ -70,6 +70,24 @@ struct Point {
     	return x == point.x && y == point.y;
     }
 
+    static Point::Direction reverseDirectionOf(Point::Direction direction){
+    	switch(direction){
+    		case Direction::Up:
+    			return Direction::Down;
+    		case Direction::Down:
+    			return Direction::Up;
+    		case Direction::Left:
+    			return Direction::Right;
+    		case Direction::Right:
+    			return Direction::Left;
+    		default:{
+    			std::ostringstream oss;
+    			oss<<"There is no reverse direction defined for "<<static_cast<char>(direction);
+    			throw std::runtime_error(oss.str());
+    		}
+    	}
+    }
+
     friend std::ostream& operator<<(std::ostream& os,const Point& point){
     	 os<<"y: "<<static_cast<unsigned>(point.y);
     	 os<<", x: "<<static_cast<unsigned>(point.x);

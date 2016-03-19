@@ -57,6 +57,7 @@ public:
          for(Point point : snake._turns){
             os<<"\t"<<point<<std::endl;
          }
+         os<<"Dead:"<<snake._dead<<std::endl;
          return os;
     }
 };

@@ -1,6 +1,7 @@
 #------------------------------------------------------------------------------
 
-SOURCE=Snake.cpp main.cpp
+HEADERS=Snake.h SnakeGame.h
+SOURCE=Snake.cpp SnakeGame.cpp main.cpp
 OUTPUT=SnakeCLI
 INCLUDES=
 LIBRARIES=-lcurses
@@ -13,7 +14,7 @@ CCFLAGS=-stdlib=libc++ -std=c++11 -Wunused -Wall
 
 all: format $(OUTPUT)
 
-$(OUTPUT): $(SOURCE)
+$(OUTPUT): $(HEADERS) $(SOURCE)
 
 	$(CC) $(CCFLAGS) $(INCLUDES) $(SOURCE) -o$(OUTPUT) $(LIBRARIES)
 
