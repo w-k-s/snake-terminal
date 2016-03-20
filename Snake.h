@@ -41,13 +41,6 @@ public:
         }
     };
 
-    void changeSnakeHeadDirection(Point::Direction direction);
-    void move(WINDOW * window);
-    void draw(WINDOW * window) const;
-    Point head() const;
-    int length() const;
-    bool dead() const;
-
     friend std::ostream& operator<<(std::ostream& os,const Snake& snake){
          os<<"Points:"<<std::endl;
          for(Point point : snake._points){
@@ -60,6 +53,18 @@ public:
          os<<"Dead:"<<snake._dead<<std::endl;
          return os;
     }
+
+    void changeSnakeHeadDirection(Point::Direction direction);
+    void move(WINDOW * window);
+    void draw(WINDOW * window) const;
+    
+    Point head() const { return _points[length() - 1]; }
+    
+    int length() const { return _points.size(); }
+
+    bool dead() const { return _dead; }
+
+    
 };
 
 

@@ -78,23 +78,8 @@ void Snake::changeSnakeHeadDirection(Point::Direction direction)
 {
     Point headCopy = head();
 
-    if (Point::reverseDirectionOf(direction) != headCopy.direction) {
+    if (direction != Point::reverseDirectionOf(headCopy.direction)) {
         headCopy.direction = direction;
         _turns.push_back(headCopy);
     }
-}
-
-Point Snake::head() const
-{
-    return _points[length() - 1];
-}
-
-int Snake::length() const
-{
-    return _points.size();
-}
-
-bool Snake::dead() const
-{
-    return _dead;
 }
