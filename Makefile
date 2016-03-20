@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 
-HEADERS=Snake.h SnakeGame.h
-SOURCE=Snake.cpp SnakeGame.cpp main.cpp
+HEADERS=$(wildcard src/*.h)
+SOURCE=$(wildcard src/*.cpp)
 OUTPUT_DIR=target/release
 OUTPUT=$(OUTPUT_DIR)/SnakeCLI
 INCLUDES=
@@ -22,7 +22,7 @@ $(OUTPUT): $(HEADERS) $(SOURCE)
 	$(CC) $(CCFLAGS) $(INCLUDES) $(SOURCE) -o$(OUTPUT) $(LIBRARIES)
 
 clean:
-	rm -f $(OUTPUT)
+	rm -rf $(OUTPUT_DIR)
 
 format: 
 	clang-format -i -style=Webkit $(SOURCE)
