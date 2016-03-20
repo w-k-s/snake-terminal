@@ -2,7 +2,7 @@
 
 HEADERS=Snake.h SnakeGame.h
 SOURCE=Snake.cpp SnakeGame.cpp main.cpp
-OUTPUT_DIR=Product/Release
+OUTPUT_DIR=target/release
 OUTPUT=$(OUTPUT_DIR)/SnakeCLI
 INCLUDES=
 LIBRARIES=-lcurses
@@ -14,7 +14,7 @@ CCFLAGS=-stdlib=libc++ -std=c++11 -Wunused -Wall
 all: format $(OUTPUT)
 
 debug: CCFLAGS += -g 
-debug: OUTPUT_DIR=Product/Debug
+debug: OUTPUT_DIR=target/debug
 debug: format $(OUTPUT)
 
 $(OUTPUT): $(HEADERS) $(SOURCE)
