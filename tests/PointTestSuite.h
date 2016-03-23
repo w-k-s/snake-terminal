@@ -14,7 +14,7 @@ public:
         TS_ASSERT_EQUALS(p1.pointByAddingPoint(p2.y,p2.x), sum);
     }
 
-    void testPointByAddingPointUnderdlow(void){
+    void testPointByAddingPointUnderflow(void){
 
         Point p1{2,2};
         TS_ASSERT_THROWS(p1.pointByAddingPoint(-5,-5),std::overflow_error);

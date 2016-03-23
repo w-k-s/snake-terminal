@@ -1,4 +1,4 @@
-TEST_SRC=PointTestSuite.h
+TEST_SRC=$(wildcard *.h)
 CXXTEST=-I../../cxxtest-4.3 -I../src
 OUTPUT_SRC=runner.cpp
 OUTPUT_EXEC=runner
