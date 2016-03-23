@@ -4,7 +4,7 @@ HEADERS=$(wildcard src/*.h)
 SOURCE=$(wildcard src/*.cpp)
 OUTPUT_DIR=target/release
 OUTPUT=$(OUTPUT_DIR)/SnakeCLI
-INCLUDES=
+INCLUDES=-I../cxxtest-4.3
 LIBRARIES=-lcurses
 CC=clang++
 CCFLAGS=-stdlib=libc++ -std=c++11 -Wunused -Wall

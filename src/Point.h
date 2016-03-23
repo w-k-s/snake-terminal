@@ -2,7 +2,7 @@
 #define POINT_H
 #include <iostream>
 #include <string>
-#include <sstream>
+#include <sstream> 
 #include <stdexcept>
 
 typedef unsigned char UChar;
@@ -64,6 +64,14 @@ struct Point {
 
     	y = static_cast<UChar>(newY);
     	x = static_cast<UChar>(newX);
+    }
+
+    friend inline bool operator==(const Point& lhs, const Point& rhs){ 
+        return lhs.y == rhs.y && lhs.x == rhs.x && lhs.direction == rhs.direction;
+    }   
+
+    friend inline bool operator!=(const Point& lhs, const Point& rhs){ 
+        return !(lhs == rhs); 
     }
 
     bool hasEqualCoordinates(const Point& point) const{
