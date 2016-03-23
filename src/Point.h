@@ -46,7 +46,7 @@ struct Point {
     	return Point(newY,newX, direction);
     }
 
-    void addKeepingWithinRange(int aY,int anX,const Point& bottomRight){
+    void addKeepingWithinRange(int aY,int anX,const Point& bottomRight) noexcept{
     	int newY = y + aY;
     	int newX = x + anX;
 
@@ -74,7 +74,7 @@ struct Point {
         return !(lhs == rhs); 
     }
 
-    bool hasEqualCoordinates(const Point& point) const{
+    bool hasEqualCoordinates(const Point& point) const noexcept{
     	return x == point.x && y == point.y;
     }
 
