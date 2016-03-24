@@ -14,7 +14,7 @@ private:
 	int _score;
 
 	void drawFruit() const;
-	Point&& randomFruitPoint() const;
+	Point randomFruitPoint() const;
 	bool fruitHasBeenEaten() const;
 
 public:

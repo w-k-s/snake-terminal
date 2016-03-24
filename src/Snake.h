@@ -18,7 +18,7 @@ private:
     PointVector _turns;
     bool _dead;
 
-    Point&& bottomRight(WINDOW* window);
+    Point bottomRight(WINDOW* window);
 
 public:
     Snake(UChar length, const Point& tail)

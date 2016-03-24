@@ -11,17 +11,20 @@ public:
         Point p1{2,2};
         Point p2{3,5};
         Point sum{5,7};
+
         TS_ASSERT_EQUALS(p1.pointByAddingPoint(p2.y,p2.x), sum);
     }
 
     void testPointByAddingPointUnderflow(void){
 
         Point p1{2,2};
+
         TS_ASSERT_THROWS(p1.pointByAddingPoint(-5,-5),std::overflow_error);
     }
 
     void testPointByAddingPointOverflow(void){
         Point p1{254,254};
+        
         TS_ASSERT_THROWS(p1.pointByAddingPoint(2,2),std::overflow_error);
     }
 

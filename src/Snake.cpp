@@ -67,25 +67,25 @@ void Snake::move(WINDOW* window)
 void Snake::grow(WINDOW* window)
 {
 
-    Point p = tail();
+    Point newTail = tail();
     Point bounds = bottomRight(window);
 
-    switch (p.direction) {
+    switch (newTail.direction) {
     case Point::Direction::Right:
-        p.addKeepingWithinRange(0, -1, bounds);
-        _points.insert(_points.begin(), p);
+        newTail.addKeepingWithinRange(0, -1, bounds);
+        _points.insert(_points.begin(), newTail);
         break;
     case Point::Direction::Left:
-        p.addKeepingWithinRange(0, 1, bounds);
-        _points.insert(_points.begin(), p);
+        newTail.addKeepingWithinRange(0, 1, bounds);
+        _points.insert(_points.begin(), newTail);
         break;
     case Point::Direction::Up:
-        p.addKeepingWithinRange(1, 0, bounds);
-        _points.insert(_points.begin(), p);
+        newTail.addKeepingWithinRange(1, 0, bounds);
+        _points.insert(_points.begin(), newTail);
         break;
     case Point::Direction::Down:
-        p.addKeepingWithinRange(-1, 0, bounds);
-        _points.insert(_points.begin(), p);
+        newTail.addKeepingWithinRange(-1, 0, bounds);
+        _points.insert(_points.begin(), newTail);
         break;
     default:
         assert(false);
@@ -103,15 +103,15 @@ void Snake::draw(WINDOW* window) const
 
 void Snake::changeSnakeHeadDirection(Point::Direction direction)
 {
-    Point headCopy = head();
+    Point theHead = head();
 
-    if (direction != Point::reverseDirectionOf(headCopy.direction)) {
-        headCopy.direction = direction;
-        _turns.push_back(headCopy);
+    if (direction != Point::reverseDirectionOf(theHead.direction)) {
+        theHead.direction = direction;
+        _turns.push_back(theHead);
     }
 }
 
-Point&& Snake::bottomRight(WINDOW* window)
+Point Snake::bottomRight(WINDOW* window)
 {
     int width, height;
     getmaxyx(window, height, width);

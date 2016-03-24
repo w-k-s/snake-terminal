@@ -74,7 +74,7 @@ bool SnakeGame::fruitHasBeenEaten() const
     return _snake.head().hasEqualCoordinates(_fruitPoint);
 }
 
-Point&& SnakeGame::randomFruitPoint() const
+Point SnakeGame::randomFruitPoint() const
 {
     int y, x;
     getmaxyx(stdscr, y, x);
@@ -89,5 +89,5 @@ Point&& SnakeGame::randomFruitPoint() const
         p = { distY(mt), distX(mt) };
     } while (_snake.occupies(p));
 
-    return std::move(p);
+    return p;
 }
