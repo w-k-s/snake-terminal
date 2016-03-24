@@ -18,6 +18,8 @@ private:
     PointVector _turns;
     bool _dead;
 
+    Point&& bottomRight(WINDOW* window);
+
 public:
     Snake(UChar length, const Point& tail)
     {
@@ -41,6 +43,11 @@ public:
         }
     };
 
+    void changeSnakeHeadDirection(Point::Direction direction);
+    void move(WINDOW * window);
+    void draw(WINDOW * window) const;
+    void grow(WINDOW * window);
+
     friend std::ostream& operator<<(std::ostream& os,const Snake& snake){
          os<<"Points:"<<std::endl;
          for(Point point : snake._points){
@@ -54,17 +61,22 @@ public:
          return os;
     }
 
-    void changeSnakeHeadDirection(Point::Direction direction);
-    void move(WINDOW * window);
-    void draw(WINDOW * window) const;
+    bool occupies(const Point& point) const{
+
+        auto it = std::find_if(_points.begin(),_points.end(),[=](const Point& p){
+            return point.hasEqualCoordinates(p);
+        });
+
+        return it != _points.end();
+    }
     
     Point head() const { return _points[length() - 1]; }
+    Point tail() const { return _points[0]; }
     
     int length() const { return _points.size(); }
 
     bool dead() const { return _dead; }
 
-    
 };
 
 

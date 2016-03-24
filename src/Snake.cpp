@@ -9,14 +9,12 @@ void Snake::move(WINDOW* window)
         return;
     }
 
-    int width, height;
-    getmaxyx(window, height, width);
-    Point bottomRight{ height, width };
+    Point bounds = bottomRight(window);
 
-    int len = length();
+    int theLength = length();
     Point::Direction direction;
 
-    for (int i = TAIL_INDEX; i < len; i++) {
+    for (int i = TAIL_INDEX; i < theLength; i++) {
         Point& point = _points[i];
 
         if (i == TAIL_INDEX) {
@@ -39,18 +37,19 @@ void Snake::move(WINDOW* window)
         point.direction = direction;
         switch (direction) {
         case Point::Direction::Right:
-            point.addKeepingWithinRange(0, 1, bottomRight);
+            point.addKeepingWithinRange(0, 1, bounds);
             break;
         case Point::Direction::Left:
-            point.addKeepingWithinRange(0, -1, bottomRight);
+            point.addKeepingWithinRange(0, -1, bounds);
             break;
         case Point::Direction::Up:
-            point.addKeepingWithinRange(-1, 0, bottomRight);
+            point.addKeepingWithinRange(-1, 0, bounds);
             break;
         case Point::Direction::Down:
-            point.addKeepingWithinRange(1, 0, bottomRight);
+            point.addKeepingWithinRange(1, 0, bounds);
             break;
         default:
+            assert(false);
             break;
         }
 
@@ -62,6 +61,34 @@ void Snake::move(WINDOW* window)
         if (count > 2) {
             _dead = true;
         }
+    }
+}
+
+void Snake::grow(WINDOW* window)
+{
+
+    Point p = tail();
+    Point bounds = bottomRight(window);
+
+    switch (p.direction) {
+    case Point::Direction::Right:
+        p.addKeepingWithinRange(0, -1, bounds);
+        _points.insert(_points.begin(), p);
+        break;
+    case Point::Direction::Left:
+        p.addKeepingWithinRange(0, 1, bounds);
+        _points.insert(_points.begin(), p);
+        break;
+    case Point::Direction::Up:
+        p.addKeepingWithinRange(1, 0, bounds);
+        _points.insert(_points.begin(), p);
+        break;
+    case Point::Direction::Down:
+        p.addKeepingWithinRange(-1, 0, bounds);
+        _points.insert(_points.begin(), p);
+        break;
+    default:
+        assert(false);
     }
 }
 
@@ -82,4 +109,11 @@ void Snake::changeSnakeHeadDirection(Point::Direction direction)
         headCopy.direction = direction;
         _turns.push_back(headCopy);
     }
+}
+
+Point&& Snake::bottomRight(WINDOW* window)
+{
+    int width, height;
+    getmaxyx(window, height, width);
+    return { height, width };
 }

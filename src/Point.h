@@ -1,5 +1,6 @@
 #ifndef POINT_H
 #define POINT_H
+#include <cassert>
 #include <iostream>
 #include <string>
 #include <sstream> 
@@ -67,7 +68,9 @@ struct Point {
     }
 
     friend inline bool operator==(const Point& lhs, const Point& rhs){ 
-        return lhs.y == rhs.y && lhs.x == rhs.x && lhs.direction == rhs.direction;
+        return lhs.y == rhs.y 
+        && lhs.x == rhs.x 
+        && lhs.direction == rhs.direction;
     }   
 
     friend inline bool operator!=(const Point& lhs, const Point& rhs){ 
@@ -88,11 +91,8 @@ struct Point {
     			return Direction::Right;
     		case Direction::Right:
     			return Direction::Left;
-    		default:{
-    			std::ostringstream oss;
-    			oss<<"There is no reverse direction defined for "<<static_cast<char>(direction);
-    			throw std::runtime_error(oss.str());
-    		}
+    		default:
+                assert(false);
     	}
     }
 
