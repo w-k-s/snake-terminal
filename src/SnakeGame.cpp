@@ -70,19 +70,24 @@ bool SnakeGame::fruitHasBeenEaten() const
     return _snake.head().hasEqualCoordinates(_fruitPoint);
 }
 
-Point SnakeGame::randomFruitPoint(WINDOW* window) const
+Point SnakeGame::randomFruitPoint(WINDOW* window)
 {
     int y, x;
-    getmaxyx(stdscr, y, x);
+    getmaxyx(window, y, x);
 
     std::random_device rd;
     std::mt19937 mt(rd());
     Point p{ 0, 0 };
+
     do {
-        std::uniform_int_distribution<> distY{ 0, y };
-        std::uniform_int_distribution<> distX{ 0, x };
+        //height width of window returned by getmaxyx is:
+        //0 <= y < height;
+        //0 <= x < width;
+        std::uniform_int_distribution<> distY{ 0, y-1 };
+        std::uniform_int_distribution<> distX{ 0, x-1 };
 
         p = { distY(mt), distX(mt) };
+
     } while (_snake.occupies(p));
 
     return p;

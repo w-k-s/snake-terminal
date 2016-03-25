@@ -97,10 +97,17 @@ struct Point {
     }
 
     friend std::ostream& operator<<(std::ostream& os,const Point& point){
-    	 os<<"y: "<<static_cast<unsigned>(point.y);
-    	 os<<", x: "<<static_cast<unsigned>(point.x);
-    	 os<<" ("<<static_cast<char>(point.direction)<<")";
-    	 return os;
+    	 std::stringstream ss;
+         ss<<point;
+         os<<ss.str();
+         return os;
+    }
+
+    friend std::stringstream& operator<<(std::stringstream& ss, const Point& point){
+        ss<<"y: "<<static_cast<unsigned>(point.y);
+        ss<<", x: "<<static_cast<unsigned>(point.x);
+        ss<<" ("<<static_cast<char>(point.direction)<<")";
+        return ss;
     }
 };
 

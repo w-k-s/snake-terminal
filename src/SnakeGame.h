@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <ncurses.h>
+#include <sstream>
 
 #include "Snake.h"
 #include "Point.h"
@@ -11,9 +12,10 @@ private:
 	Snake _snake;
 	Point _fruitPoint;
 	int _score;
+	//std::ostringstream _debug;
 
 	void drawFruit() const;
-	Point randomFruitPoint(WINDOW * window) const;
+	Point randomFruitPoint(WINDOW * window) ;
 	bool fruitHasBeenEaten() const;
 
 public:

@@ -61,16 +61,23 @@ public:
     void grow(WINDOW * window);
 
     friend std::ostream& operator<<(std::ostream& os,const Snake& snake){
-         os<<"Points:"<<std::endl;
-         for(Point point : snake._points){
-            os<<"\t"<<point<<std::endl;
-         }
-         os<<"Turns:"<<std::endl;;
-         for(Point point : snake._turns){
-            os<<"\t"<<point<<std::endl;
-         }
-         os<<"Dead:"<<snake._dead<<std::endl;
+         std::stringstream ss;
+         ss << snake;
+         os<<ss.str();
          return os;
+    }
+
+    friend std::stringstream& operator<<(std::stringstream& ss, const Snake& snake){
+        ss<<"Points:"<<std::endl;
+         for(Point point : snake._points){
+            ss<<"\t"<<point<<std::endl;
+         }
+         ss<<"Turns:"<<std::endl;;
+         for(Point point : snake._turns){
+            ss<<"\t"<<point<<std::endl;
+         }
+         ss<<"Dead:\t"<<snake._dead<<std::endl;
+         return ss;
     }
 
     bool occupies(const Point& point) const{
