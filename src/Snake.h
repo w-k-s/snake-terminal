@@ -18,7 +18,7 @@ private:
     PointVector _turns;
     bool _dead;
 
-    Point bottomRight(WINDOW* window);
+    Point bottomRight(WINDOW* window);//WRONG: This does not belong in Snake? Move to NCurses Util
 
 public:
     Snake(UChar length, const Point& tail)
@@ -43,7 +43,7 @@ public:
         }
     };
 
-    void changeSnakeHeadDirection(Point::Direction direction);
+    void changeHeadDirection(Point::Direction direction);
     void move(WINDOW * window);
     void draw(WINDOW * window) const;
     void grow(WINDOW * window);
@@ -68,6 +68,19 @@ public:
         });
 
         return it != _points.end();
+    }
+
+
+    bool hasBittenItself() const{
+
+        //check if there is a point after the head that is at the same location as head
+        //head is at _points.end();
+        
+        int count = std::count_if(_points.begin(), --_points.end(), [=](const Point& p) {
+            return head().hasEqualCoordinates(p);
+        });
+
+        return count == 1;
     }
     
     Point head() const { return _points[length() - 1]; }

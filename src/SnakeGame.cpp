@@ -3,19 +3,20 @@
 
 void SnakeGame::run()
 {
+    bool quit = false;
     int inputKey;
-    _fruitPoint = randomFruitPoint();
+    _fruitPoint = randomFruitPoint(stdscr);
 
     move(0, 0);
-    while (!_quit) {
+    while (!quit) {
         inputKey = getch();
         napms(100);
         erase();
 
         if (fruitHasBeenEaten()) {
-            _snake.grow(stdscr);
-            _fruitPoint = randomFruitPoint();
             ++_score;
+            _snake.grow(stdscr);
+            _fruitPoint = randomFruitPoint(stdscr);
         }
 
         drawFruit();
@@ -25,8 +26,7 @@ void SnakeGame::run()
             _snake.draw(stdscr);
         }
         else {
-            int y, x;
-            getyx(stdscr, y, x);
+
             Point::Direction direction = Point::Direction::Right;
             switch (inputKey) {
             case KEY_DOWN:
@@ -42,7 +42,7 @@ void SnakeGame::run()
                 direction = Point::Direction::Left;
                 break;
             case 'q':
-                _quit = true;
+                quit = true;
                 break;
 
             default:
@@ -50,7 +50,7 @@ void SnakeGame::run()
                 break;
             }
 
-            _snake.changeSnakeHeadDirection(direction);
+            _snake.changeHeadDirection(direction);
             _snake.move(stdscr);
             _snake.draw(stdscr);
         }
@@ -74,7 +74,7 @@ bool SnakeGame::fruitHasBeenEaten() const
     return _snake.head().hasEqualCoordinates(_fruitPoint);
 }
 
-Point SnakeGame::randomFruitPoint() const
+Point SnakeGame::randomFruitPoint(WINDOW* window) const
 {
     int y, x;
     getmaxyx(stdscr, y, x);

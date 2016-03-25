@@ -10,15 +10,14 @@ class SnakeGame{
 private:
 	Snake _snake;
 	Point _fruitPoint;
-	bool _quit;
 	int _score;
 
 	void drawFruit() const;
-	Point randomFruitPoint() const;
+	Point randomFruitPoint(WINDOW * window) const;
 	bool fruitHasBeenEaten() const;
 
 public:
-	SnakeGame():_snake{ 3, Point{ 0, 0 } },_fruitPoint{0,0}{
+	SnakeGame():_snake{ 10, Point{ 0, 0 } },_fruitPoint{0,0}{
 		initscr();
 	    cbreak(); // disable character buffering
 	    noecho(); // don't print input keys

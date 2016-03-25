@@ -12,21 +12,22 @@ void Snake::move(WINDOW* window)
     Point bounds = bottomRight(window);
 
     int theLength = length();
-    Point::Direction direction;
+    Point::Direction newDirection;
 
     for (int i = TAIL_INDEX; i < theLength; i++) {
         Point& point = _points[i];
 
         if (i == TAIL_INDEX) {
-            direction = point.direction;
+            newDirection = point.direction;
         }
 
+        //if current point is a turn point, update value of newDirection.
         auto it = std::find_if(_turns.begin(), _turns.end(), [=](const Point& p) {
             return point.hasEqualCoordinates(p);
         });
 
         if (it != _turns.end()) {
-            direction = it->direction;
+            newDirection = it->direction;
 
             //Remove turning point when last segment of snake has passed through it
             if (i == TAIL_INDEX) {
@@ -34,8 +35,8 @@ void Snake::move(WINDOW* window)
             }
         }
 
-        point.direction = direction;
-        switch (direction) {
+        point.direction = newDirection;
+        switch (point.direction) {
         case Point::Direction::Right:
             point.addKeepingWithinRange(0, 1, bounds);
             break;
@@ -52,15 +53,10 @@ void Snake::move(WINDOW* window)
             assert(false);
             break;
         }
+    }
 
-        //TODO, just check if it exists - don't need an iterator.
-        int count = std::count_if(_points.begin(), _points.end(), [=](const Point& p) {
-            return point.hasEqualCoordinates(p);
-        });
-
-        if (count > 2) {
-            _dead = true;
-        }
+    if (hasBittenItself()) {
+        _dead = true;
     }
 }
 
@@ -101,7 +97,7 @@ void Snake::draw(WINDOW* window) const
     }
 }
 
-void Snake::changeSnakeHeadDirection(Point::Direction direction)
+void Snake::changeHeadDirection(Point::Direction direction)
 {
     Point theHead = head();
 
