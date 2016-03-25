@@ -10,11 +10,9 @@ void Snake::move(WINDOW* window)
     }
 
     Point bounds = bottomRight(window);
-
-    int theLength = length();
     Point::Direction newDirection;
 
-    for (int i = TAIL_INDEX; i < theLength; i++) {
+    for (int i = TAIL_INDEX; i < length(); i++) {
         Point& point = _points[i];
 
         if (i == TAIL_INDEX) {
@@ -55,7 +53,7 @@ void Snake::move(WINDOW* window)
         }
     }
 
-    if (hasBittenItself()) {
+    if (didBiteItself()) {
         _dead = true;
     }
 }
@@ -69,23 +67,21 @@ void Snake::grow(WINDOW* window)
     switch (newTail.direction) {
     case Point::Direction::Right:
         newTail.addKeepingWithinRange(0, -1, bounds);
-        _points.insert(_points.begin(), newTail);
         break;
     case Point::Direction::Left:
         newTail.addKeepingWithinRange(0, 1, bounds);
-        _points.insert(_points.begin(), newTail);
         break;
     case Point::Direction::Up:
         newTail.addKeepingWithinRange(1, 0, bounds);
-        _points.insert(_points.begin(), newTail);
         break;
     case Point::Direction::Down:
         newTail.addKeepingWithinRange(-1, 0, bounds);
-        _points.insert(_points.begin(), newTail);
         break;
     default:
         assert(false);
     }
+
+    _points.insert(_points.begin(), newTail);
 }
 
 void Snake::draw(WINDOW* window) const

@@ -65,10 +65,6 @@ void SnakeGame::drawFruit() const
     addch('$');
 }
 
-/**
-*@return true if Snake's head is at the position of the fruit.
-*
-*/
 bool SnakeGame::fruitHasBeenEaten() const
 {
     return _snake.head().hasEqualCoordinates(_fruitPoint);
