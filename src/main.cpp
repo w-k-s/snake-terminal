@@ -2,6 +2,6 @@
 
 int main()
 {
-    SnakeGame game;
+    SnakeGame game{ 3, SnakeGame::SpeedFactor::Moderate };
     game.run();
 }

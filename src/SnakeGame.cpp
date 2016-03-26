@@ -10,11 +10,11 @@ void SnakeGame::run()
     move(0, 0);
     while (!quit) {
         inputKey = getch();
-        napms(100);
+        napms(_napTime);
         erase();
 
         if (fruitHasBeenEaten()) {
-            ++_score;
+            incrementScore();
             _snake.grow(stdscr);
             _fruitPoint = randomFruitPoint(stdscr);
         }
@@ -46,11 +46,11 @@ void SnakeGame::run()
                 break;
 
             default:
-                //continue in direction
+                // continue in direction
                 break;
             }
 
-            _snake.changeHeadDirection(direction);
+            _snake.changeDirection(direction);
             _snake.move(stdscr);
             _snake.draw(stdscr);
         }
@@ -80,11 +80,11 @@ Point SnakeGame::randomFruitPoint(WINDOW* window)
     Point p{ 0, 0 };
 
     do {
-        //height width of window returned by getmaxyx is:
-        //0 <= y < height;
-        //0 <= x < width;
-        std::uniform_int_distribution<> distY{ 0, y-1 };
-        std::uniform_int_distribution<> distX{ 0, x-1 };
+        // height width of window returned by getmaxyx is:
+        // 0 <= y < height;
+        // 0 <= x < width;
+        std::uniform_int_distribution<> distY{ 0, y - 1 };
+        std::uniform_int_distribution<> distX{ 0, x - 1 };
 
         p = { distY(mt), distX(mt) };
 

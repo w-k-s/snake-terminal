@@ -6,7 +6,7 @@
 #include <sstream> 
 #include <stdexcept>
 
-typedef unsigned char UChar;
+using uchar = unsigned char;
 
 struct Point {
 	
@@ -17,18 +17,18 @@ struct Point {
         Right = 'R'
     };
 
-    UChar y;
-    UChar x;
+    uchar y;
+    uchar x;
     Direction direction;
     
     Point(int y, int x, Direction direction=Direction::Right)
-        : y{ static_cast<UChar>(y) }
-        , x{ static_cast<UChar>(x) }
+        : y{ static_cast<uchar>(y) }
+        , x{ static_cast<uchar>(x) }
         , direction{direction}
     {
     }
 
-    Point(UChar y, UChar x, Direction direction=Direction::Right)
+    Point(uchar y, uchar x, Direction direction=Direction::Right)
     	: y{y}
     	, x{x}
     	, direction{direction}
@@ -63,8 +63,8 @@ struct Point {
     		newX %= bottomRight.x;
     	}
 
-    	y = static_cast<UChar>(newY);
-    	x = static_cast<UChar>(newX);
+    	y = static_cast<uchar>(newY);
+    	x = static_cast<uchar>(newX);
     }
 
     friend inline bool operator==(const Point& lhs, const Point& rhs){ 

@@ -8,11 +8,11 @@
 
 #define TAIL_INDEX 0
 
-typedef std::vector<Point> PointVector;
+using PointVector = std::vector<Point>;
 
 class Snake {
 public:
-    
+
 private:
     PointVector _points;
     PointVector _turns;
@@ -33,8 +33,15 @@ private:
     }
 
 public:
-    Snake(UChar length, const Point& tail)
+    static const uchar MaxLength = 100;
+
+    Snake(uchar length, const Point& tail)
     {
+        if (length >= MaxLength)
+        {
+            length = MaxLength;
+        }
+
         _points.push_back(tail);
         for(int i= TAIL_INDEX ;i<length - 1; i++){
             Point& lastPoint = _points[i];
@@ -55,7 +62,7 @@ public:
         }
     };
 
-    void changeHeadDirection(Point::Direction direction);
+    void changeDirection(Point::Direction direction);
     void move(WINDOW * window);
     void draw(WINDOW * window) const;
     void grow(WINDOW * window);

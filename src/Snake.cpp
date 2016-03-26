@@ -19,7 +19,7 @@ void Snake::move(WINDOW* window)
             newDirection = point.direction;
         }
 
-        //if current point is a turn point, update value of newDirection.
+        // if current point is a turn point, update value of newDirection.
         auto it = std::find_if(_turns.begin(), _turns.end(), [=](const Point& p) {
             return point.hasEqualCoordinates(p);
         });
@@ -27,7 +27,7 @@ void Snake::move(WINDOW* window)
         if (it != _turns.end()) {
             newDirection = it->direction;
 
-            //Remove turning point when last segment of snake has passed through it
+            // Remove turning point when last segment of snake has passed through it
             if (i == TAIL_INDEX) {
                 _turns.erase(it);
             }
@@ -60,6 +60,10 @@ void Snake::move(WINDOW* window)
 
 void Snake::grow(WINDOW* window)
 {
+    if (length() == MaxLength) {
+        // continue playing game with snake at max length.
+        return;
+    }
 
     Point newTail = tail();
     Point bounds = bottomRight(window);
@@ -93,7 +97,7 @@ void Snake::draw(WINDOW* window) const
     }
 }
 
-void Snake::changeHeadDirection(Point::Direction direction)
+void Snake::changeDirection(Point::Direction direction)
 {
     Point theHead = head();
 
