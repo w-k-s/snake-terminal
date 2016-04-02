@@ -26,3 +26,6 @@ clean:
 
 format: 
 	clang-format -i -style=Webkit $(SOURCE) $(HEADERS)
+
+run:
+	./target/release/SnakeCLI

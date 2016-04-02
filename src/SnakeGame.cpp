@@ -1,29 +1,41 @@
 #include "SnakeGame.h"
 #include <random>
 
+#define LINES_SCORE_WINDOW 3
+
+void SnakeGame::initWindows()
+{
+    int y, x;
+    getmaxyx(stdscr, y, x);
+
+    scoreWindow = newwin(LINES_SCORE_WINDOW, x, 0, 0);
+    gameWindow = newwin(y - LINES_SCORE_WINDOW, x, LINES_SCORE_WINDOW, 0);
+}
+
 void SnakeGame::run()
 {
     bool quit = false;
     int inputKey;
-    _fruitPoint = randomFruitPoint(stdscr);
+    _fruitPoint = randomFruitPoint(gameWindow);
 
-    move(0, 0);
+    wmove(gameWindow, 0, 0);
     while (!quit) {
         inputKey = getch();
         napms(_napTime);
-        erase();
+        wclear(gameWindow);
 
         if (fruitHasBeenEaten()) {
             incrementScore();
-            _snake.grow(stdscr);
-            _fruitPoint = randomFruitPoint(stdscr);
+            _snake.grow(gameWindow);
+            _fruitPoint = randomFruitPoint(gameWindow);
         }
 
         drawFruit();
+        drawScoreWindow();
 
         if ((inputKey = getch()) == ERR) {
-            _snake.move(stdscr);
-            _snake.draw(stdscr);
+            _snake.move(gameWindow);
+            _snake.draw(gameWindow);
         }
         else {
 
@@ -51,18 +63,40 @@ void SnakeGame::run()
             }
 
             _snake.changeDirection(direction);
-            _snake.move(stdscr);
-            _snake.draw(stdscr);
+            _snake.move(gameWindow);
+            _snake.draw(gameWindow);
         }
 
-        doupdate();
+        wrefresh(scoreWindow);
+        wrefresh(gameWindow);
     }
 }
 
 void SnakeGame::drawFruit() const
 {
-    move(_fruitPoint.y, _fruitPoint.x);
-    addch('$');
+    wmove(gameWindow, _fruitPoint.y, _fruitPoint.x);
+    waddch(gameWindow, '$');
+}
+
+void SnakeGame::drawScoreWindow() const
+{
+    int y, x;
+    getmaxyx(scoreWindow, y, x);
+
+    std::ostringstream oss;
+
+    if (_snake.dead()) {
+        oss << "GAME OVER. ";
+    }
+
+    oss << "Score: " << static_cast<int>(_score);
+
+    mvwprintw(scoreWindow, 0, 0, oss.str().c_str());
+
+    std::string line;
+    line.assign(x, '-');
+
+    mvwprintw(scoreWindow, LINES_SCORE_WINDOW - 1, 0, line.c_str());
 }
 
 bool SnakeGame::fruitHasBeenEaten() const
