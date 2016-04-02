@@ -12,4 +12,5 @@ The Classic Snake game designed for Terminal on Mac OS X
 
 ## To-Do
 
-1. Refactor SnakeGame (too much logic in one class)
+1. Refactor SnakeGame.cpp (too much logic in one class)
+2. Refactor Makefile (switch to SCons?)
