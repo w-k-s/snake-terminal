@@ -57,9 +57,6 @@ public:
         delwin(scoreWindow);
         delwin(gameWindow);
         endwin();
-        std::cout << "Increment: " << static_cast<unsigned>(_scoreIncrement) << ","
-                  << " Score: " << static_cast<unsigned>(_score) << std::endl;
-        std::cout << _debug.str() << std::endl;
     }
 
     void run();

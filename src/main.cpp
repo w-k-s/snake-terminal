@@ -14,7 +14,7 @@ void parseArguments(int argc, char** argv, SnakeGame::Speed& speed)
 
     parser.parse_check(argc, argv);
 
-    uchar _speed = (uchar) static_cast<int>(parser.get<int>("speed"));
+    uchar _speed = (uchar) parser.get<int>("speed");
     speed = static_cast<SnakeGame::Speed>(_speed);
 }
 

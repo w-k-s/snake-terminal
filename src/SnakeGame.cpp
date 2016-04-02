@@ -78,27 +78,6 @@ void SnakeGame::drawFruit() const
     waddch(gameWindow, '$');
 }
 
-void SnakeGame::drawScoreWindow() const
-{
-    int y, x;
-    getmaxyx(scoreWindow, y, x);
-
-    std::ostringstream oss;
-
-    if (_snake.dead()) {
-        oss << "GAME OVER. ";
-    }
-
-    oss << "Score: " << static_cast<int>(_score);
-
-    mvwprintw(scoreWindow, 0, 0, oss.str().c_str());
-
-    std::string line;
-    line.assign(x, '-');
-
-    mvwprintw(scoreWindow, LINES_SCORE_WINDOW - 1, 0, line.c_str());
-}
-
 bool SnakeGame::fruitHasBeenEaten() const
 {
     return _snake.head().hasEqualCoordinates(_fruitPoint);
@@ -125,4 +104,25 @@ Point SnakeGame::randomFruitPoint(WINDOW* window)
     } while (_snake.occupies(p));
 
     return p;
+}
+
+void SnakeGame::drawScoreWindow() const
+{
+    int y, x;
+    getmaxyx(scoreWindow, y, x);
+
+    std::ostringstream oss;
+
+    if (_snake.dead()) {
+        oss << "GAME OVER. ";
+    }
+
+    oss << "Score: " << static_cast<int>(_score);
+
+    mvwprintw(scoreWindow, 0, 0, oss.str().c_str());
+
+    std::string line;
+    line.assign(x, '-');
+
+    mvwprintw(scoreWindow, LINES_SCORE_WINDOW - 1, 0, line.c_str());
 }
