@@ -3,6 +3,9 @@
 #include "Snake.h"
 #include "Point.h"
 
+const uchar Snake::MinLength = 3;
+const uchar Snake::MaxLength = 100;
+
 void Snake::move(WINDOW* window)
 {
     if (dead()) {

@@ -25,4 +25,4 @@ clean:
 	rm -rf $(OUTPUT_DIR)
 
 format: 
-	clang-format -i -style=Webkit $(SOURCE)
+	clang-format -i -style=Webkit $(SOURCE) $(HEADERS)
