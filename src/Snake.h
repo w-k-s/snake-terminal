@@ -101,9 +101,7 @@ public:
 
     Point head() const { return _points[length() - 1]; }
     Point tail() const { return _points[0]; }
-
     int length() const { return _points.size(); }
-
     bool dead() const { return _dead; }
 };
 
