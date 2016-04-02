@@ -8,8 +8,8 @@ The Classic Snake game designed for Terminal on Mac OS X
 
 2. Improve Makefiles (especially the tests make file) // Maybe switch to Scons
 
-3. Add Command Line Arguments (Speed, Preferred Snake Length)
-
 ## Libraries
 
 - [CxxTest](http://cxxtest.com/) v4.1.3: CxxTest is a unit testing framework for C++ that is similar in spirit to JUnit
+
+- [cmdline](https://github.com/tanakh/cmdline.git): A really straight-forward command line parser for C++, based on STL.
