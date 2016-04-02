@@ -16,7 +16,7 @@ private:
     PointVector _turns;
     bool _dead;
 
-    Point bottomRight(WINDOW* window); //WRONG: This does not belong in Snake. Move to NCurses Util?
+    Point bottomRight(WINDOW* window);
 
     bool didBiteItself() const
     {
